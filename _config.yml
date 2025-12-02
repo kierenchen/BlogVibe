@@ -17,7 +17,7 @@ minimal_mistakes_skin    : "warmth" # "air", "aqua", "contrast", "dark", "dirt",
 # Site Settings
 locale                   : "zh-TW"
 rtl                      : # true, false (default) # turns direction of the page into right to left for RTL languages
-title                    : "Kieren Chen｜專案管理生活思維"
+title                    : "Kieren Chen｜專案管理雜談"
 title_separator          : "-"
 subtitle                 : "外商專案工程師，專注遠距專案管理與 MS Project 實戰"
 name                     : "Kieren Chen"
