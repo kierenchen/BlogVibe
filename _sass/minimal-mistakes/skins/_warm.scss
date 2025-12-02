@@ -1,0 +1,49 @@
+/* ==========================================================================
+   Warm professional skin
+   ========================================================================== */
+
+/* Colors */
+$dark-gray: #1f2a36 !default;
+$background-color: #f7f2ec !default;
+$text-color: $dark-gray !default;
+$muted-text-color: #4b5563 !default;
+$primary-color: #c47c49 !default;
+$border-color: mix(#000, $background-color, 18%) !default;
+$code-background-color: mix(#fff, $background-color, 14%) !default;
+$code-background-color-dark: mix(#000, $background-color, 12%) !default;
+$form-background-color: mix(#fff, $background-color, 18%) !default;
+$footer-background-color: #f0e6d8 !default;
+$link-color: mix(#000, $primary-color, 8%) !default;
+$link-color-hover: mix(#fff, $link-color, 20%) !default;
+$link-color-visited: mix(#000, $link-color, 22%) !default;
+$masthead-link-color: $text-color !default;
+$masthead-link-color-hover: mix(#000, $text-color, 16%) !default;
+$navicon-link-color-hover: mix(#000, $background-color, 28%) !default;
+
+/* notices */
+$notice-background-mix: 78% !default;
+
+/* warm syntax highlighting (base16-inspired) */
+$base00: #1f1f1f !default;
+$base01: #2d2d2d !default;
+$base02: #4b423c !default;
+$base03: #6b615a !default;
+$base04: #8b827a !default;
+$base05: #b3a79e !default;
+$base06: #d8cec5 !default;
+$base07: #f7f2ec !default;
+$base08: #c47c49 !default;
+$base09: #c48c5c !default;
+$base0a: #d8a657 !default;
+$base0b: #8ca47a !default;
+$base0c: #78a3a4 !default;
+$base0d: #5c7ba7 !default;
+$base0e: #9c78a7 !default;
+$base0f: #c47c49 !default;
+
+.author__urls.social-icons i,
+.author__urls.social-icons .svg-inline--fa,
+.page__footer-follow .social-icons i,
+.page__footer-follow .social-icons .svg-inline--fa  {
+  color: inherit;
+}
