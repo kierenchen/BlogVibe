@@ -1,0 +1,32 @@
+/* ==========================================================================
+   Warm Professional skin
+   A subdued, welcoming palette with warm neutrals and understated accents
+   ==========================================================================
+*/
+
+$background-color: #f7f2ec !default;
+$text-color: #2f2823 !default;
+$muted-text-color: mix(#fff, $text-color, 35%) !default;
+$border-color: #e3d6c7 !default;
+$form-background-color: #f0e8dd !default;
+$footer-background-color: #ede2d4 !default;
+
+$primary-color: #a26b52 !default; // warm terracotta accent
+$info-color: #8c715e !default;
+$success-color: #6d8f72 !default;
+$warning-color: #c68a4a !default;
+$danger-color: #b85c5c !default;
+$focus-color: $primary-color !default;
+$active-color: mix(#fff, $primary-color, 82%) !default;
+
+$link-color: mix(#000, $primary-color, 15%) !default;
+$link-color-hover: mix(#000, $link-color, 20%) !default;
+$link-color-visited: mix(#fff, $link-color, 10%) !default;
+$masthead-link-color: $primary-color !default;
+$masthead-link-color-hover: mix(#000, $primary-color, 20%) !default;
+$navicon-link-color-hover: mix(#fff, $primary-color, 72%) !default;
+
+$code-background-color: #f2eae0 !default;
+$code-background-color-dark: #e1d2c4 !default;
+$notice-background-mix: 86% !default;
+$code-notice-background-mix: 92% !default;
