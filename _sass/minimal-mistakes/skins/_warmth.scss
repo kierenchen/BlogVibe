@@ -1,0 +1,29 @@
+/* ==========================================================================
+   Warmth skin
+   Designed for a professional, understated, and welcoming tone
+   ========================================================================== */
+
+/* Colors */
+$background-color: #f7f2ec !default; // warm paper-like backdrop
+$text-color: #2f2824 !default; // refined dark brown for high contrast
+$muted-text-color: #6c5f58 !default; // softened text for accents
+$primary-color: #b86945 !default; // muted terracotta accent
+$border-color: mix(#fff, $text-color, 78%) !default;
+$footer-background-color: #e8d7c9 !default;
+$code-background-color: #f1e7df !default;
+
+$link-color: $primary-color !default;
+$link-color-hover: mix(#000, $primary-color, 15%) !default;
+$link-color-visited: mix(#fff, $primary-color, 20%) !default;
+$masthead-link-color: $text-color !default;
+$masthead-link-color-hover: mix(#000, $primary-color, 30%) !default;
+$navicon-link-color-hover: mix(#fff, $primary-color, 70%) !default;
+
+.page__footer {
+  color: $text-color !important;
+}
+
+.page__footer-follow .social-icons i,
+.page__footer-follow .social-icons .svg-inline--fa {
+  color: inherit;
+}
