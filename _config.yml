@@ -114,7 +114,7 @@ analytics:
 # Site Author
 author:
   name             : "Kieren Chen"
-  avatar           : "/assets/images/author-avatar.jpg"
+  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "外商專案工程師，擅長產品開發專案管理、遠距協作與 MS Project 排程最佳化。"
   location         : "遠距 / 跨國合作"
   email            :
