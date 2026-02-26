@@ -13,12 +13,58 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Post "building" comment immediately
+        if: github.event.action != 'closed'
+        id: preview-comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const marker = '<!-- pr-preview-bot -->';
+            const body = `${marker}\n## 🔍 PR 預覽\n\n⏳ 正在建置中，請稍候...`;
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            const existing = comments.find(c =>
+              c.user.type === 'Bot' && c.body.includes(marker)
+            );
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+              return existing.id;
+            } else {
+              const { data } = await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+              return data.id;
+            }
 
       - uses: ruby/setup-ruby@v1
         if: github.event.action != 'closed'
         with:
           ruby-version: '3.2'
           bundler-cache: true
+
+      - name: Cache Jekyll build
+        if: github.event.action != 'closed'
+        uses: actions/cache@v4
+        with:
+          path: .jekyll-cache
+          key: jekyll-${{ runner.os }}-${{ hashFiles('_config.yml', 'Gemfile') }}-${{ github.ref }}
+          restore-keys: |
+            jekyll-${{ runner.os }}-${{ hashFiles('_config.yml', 'Gemfile') }}-
+            jekyll-${{ runner.os }}-
 
       - name: Build Jekyll site for preview
         if: github.event.action != 'closed'
@@ -28,7 +74,8 @@ jobs:
           BASEURL="/${REPO_NAME}/pr-preview/pr-${PR_NUMBER}"
           bundle exec jekyll build \
             --baseurl "${BASEURL}" \
-            --destination _site
+            --destination _site \
+            --incremental
         env:
           JEKYLL_ENV: production
 
@@ -40,6 +87,25 @@ jobs:
           publish_dir: ./_site
           destination_dir: pr-preview/pr-${{ github.event.number }}
           keep_files: true
+
+      - name: Update comment with preview URL
+        if: github.event.action != 'closed'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = context.issue.number;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const previewUrl = `https://${owner}.github.io/${repo}/pr-preview/pr-${prNumber}/`;
+            const commentId = ${{ steps.preview-comment.outputs.result }};
+            const marker = '<!-- pr-preview-bot -->';
+            const body = `${marker}\n## 🔍 PR 預覽\n\n預覽網址：${previewUrl}\n\n*最後更新：${new Date().toISOString()}*`;
+            await github.rest.issues.updateComment({
+              owner,
+              repo,
+              comment_id: commentId,
+              body,
+            });
 
       - name: Remove preview on PR close
         if: github.event.action == 'closed'
@@ -54,42 +120,3 @@ jobs:
             git diff --cached --quiet || git commit -m "Remove PR #${{ github.event.number }} preview"
             git push origin gh-pages
           fi
-
-      - name: Comment PR with preview URL
-        if: github.event.action != 'closed'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const prNumber = context.issue.number;
-            const owner = context.repo.owner;
-            const repo = context.repo.repo;
-            const previewUrl = `https://${owner}.github.io/${repo}/pr-preview/pr-${prNumber}/`;
-
-            const { data: comments } = await github.rest.issues.listComments({
-              owner,
-              repo,
-              issue_number: prNumber,
-            });
-
-            const marker = '<!-- pr-preview-bot -->';
-            const body = `${marker}\n## 🔍 PR 預覽\n\n預覽網址：${previewUrl}\n\n*最後更新：${new Date().toISOString()}*`;
-
-            const botComment = comments.find(c =>
-              c.user.type === 'Bot' && c.body.includes(marker)
-            );
-
-            if (botComment) {
-              await github.rest.issues.updateComment({
-                owner,
-                repo,
-                comment_id: botComment.id,
-                body,
-              });
-            } else {
-              await github.rest.issues.createComment({
-                owner,
-                repo,
-                issue_number: prNumber,
-                body,
-              });
-            }
